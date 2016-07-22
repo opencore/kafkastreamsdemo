@@ -1,0 +1,7 @@
+sap
+opencore
+bigdata
+confluent
+kafka
+bigdata
+hadoop

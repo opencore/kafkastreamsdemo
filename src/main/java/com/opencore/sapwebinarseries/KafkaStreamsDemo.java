@@ -133,7 +133,7 @@ public class KafkaStreamsDemo {
     splitTweets.countByKey(TimeWindows.of("BuzzWordCountWindow", 5 * 60 * 1000L)).mapValues(value -> value.toString())
         .toStream()
         // filter stream to only buzzwords or hashtags of that buzzword
-        .filter((windowedUserId, count) -> (buzzWords.contains(windowedUserId.key()) || buzzWords.contains("#" + windowedUserId.key())))
+        .filter((windowedUserId, count) -> (buzzWords.contains(windowedUserId.key()) || buzzWords.contains(windowedUserId.key().replaceFirst("#",""))))
         // perform a bit of formating on the key - to get a human readable datetime and the counted word
         .map((windowedUserId, count) -> new KeyValue<>(new Date(windowedUserId.window().end()).toString() + "-" + windowedUserId.key(), count))
         // output stream to Kafka topic
